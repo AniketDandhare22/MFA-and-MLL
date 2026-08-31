@@ -1,0 +1,88 @@
+#Finding 
+X = [12.1,13.2,15.6,17.2,18.8,10.3,11.7,16.4]
+Y = [48,54,32,18,41,32,31,30]
+Z = [101,171,112,132,140,112,151,96]
+
+sum = 0
+for i in range(len(X)):
+    sum += X[i]
+meanX = sum / len(X)-1
+
+sum = 0
+for i in range(len(Y)):
+    sum += Y[i]
+meanY = sum / len(Y)-1
+
+sum = 0
+for i in range(len(Z)):
+    sum += Z[i]
+meanZ = sum / len(Z)-1
+
+
+# variance X
+sum = 0
+for i in range(len(X)):
+    sum += (X[i] - meanX) ** 2
+varX = sum / len(X)-1
+
+
+# variance Y
+sum = 0
+for i in range(len(Y)):
+    sum += (Y[i] - meanY) ** 2
+varY = sum / len(Y)-1
+
+
+# variance Z
+sum = 0
+for i in range(len(Z)):
+    sum += (Z[i] - meanZ) ** 2
+varZ = sum / len(Z)-1
+
+
+# covariance XY
+sum = 0
+for i in range(len(X)):
+    sum += (X[i] - meanX) * (Y[i] - meanY)
+covXY = sum / len(X)-1
+
+
+# covariance XZ
+sum = 0
+for i in range(len(X)):
+    sum += (X[i] - meanX) * (Z[i] - meanZ)
+covXZ = sum / len(X)-1
+
+
+# covariance YZ
+sum = 0
+for i in range(len(Y)):
+    sum += (Y[i] - meanY) * (Z[i] - meanZ)
+covYZ = sum / len(Y)-1
+
+
+ans = [
+    [varX, covXY, covXZ],
+    [covXY, varY, covYZ],
+    [covXZ, covYZ, varZ]
+]
+
+print("Mean X =", meanX)
+print("Mean Y =", meanY)
+print("Mean Z =", meanZ)
+
+print("Covariance Matrix")
+
+for i in range(len(ans)):
+    print(ans[i])
+
+
+
+    import numpy as np
+
+eigenvalues, eigenvectors = np.linalg.eig(ans)
+
+print("Eigen Values")
+
+for i in range(len(eigenvalues)):
+    print(eigenvalues[i])
