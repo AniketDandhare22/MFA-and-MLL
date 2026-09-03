@@ -6,59 +6,59 @@ Z = [101,171,112,132,140,112,151,96]
 sum = 0
 for i in range(len(X)):
     sum += X[i]
-meanX = sum / len(X)-1
+meanX = sum / len(X)
 
 sum = 0
 for i in range(len(Y)):
     sum += Y[i]
-meanY = sum / len(Y)-1
+meanY = sum / len(Y)
 
 sum = 0
 for i in range(len(Z)):
     sum += Z[i]
-meanZ = sum / len(Z)-1
+meanZ = sum / len(Z)
 
 
 # variance X
 sum = 0
 for i in range(len(X)):
     sum += (X[i] - meanX) ** 2
-varX = sum / len(X)-1
+varX = sum / len(X)
 
 
 # variance Y
 sum = 0
 for i in range(len(Y)):
     sum += (Y[i] - meanY) ** 2
-varY = sum / len(Y)-1
+varY = sum / len(Y)
 
 
 # variance Z
 sum = 0
 for i in range(len(Z)):
     sum += (Z[i] - meanZ) ** 2
-varZ = sum / len(Z)-1
+varZ = sum / len(Z)
 
 
 # covariance XY
 sum = 0
 for i in range(len(X)):
     sum += (X[i] - meanX) * (Y[i] - meanY)
-covXY = sum / len(X)-1
+covXY = sum / len(X)
 
 
 # covariance XZ
 sum = 0
 for i in range(len(X)):
     sum += (X[i] - meanX) * (Z[i] - meanZ)
-covXZ = sum / len(X)-1
+covXZ = sum / len(X)
 
 
 # covariance YZ
 sum = 0
 for i in range(len(Y)):
     sum += (Y[i] - meanY) * (Z[i] - meanZ)
-covYZ = sum / len(Y)-1
+covYZ = sum / len(Y)
 
 
 ans = [
