@@ -1,43 +1,67 @@
-import matplotlib.pyplot as mat
-import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
 
-Height = [
-    1.70, 1.62, 1.52, 1.85, 1.91, 1.42,
-    1.68, 1.75, 1.59, 1.82, 1.73, 1.66,
-    1.78, 1.55, 1.88, 1.64, 1.71, 1.49,
-    1.80, 1.57, 1.69, 1.76, 1.61, 1.84,
-    1.53, 1.72, 1.67, 1.90, 1.58, 1.74
-]
+data = pd.read_csv("./weight-height.csv")
 
-Weight = [
-    72, 64, 84, 80, 72, 70,
-    68, 76, 58, 82, 71, 65,
-    79, 55, 85, 62, 74, 52,
-    88, 60, 69, 77, 63, 81,
-    57, 73, 67, 91, 59, 75
-]
 
-# slope
-m = np.cov(Height, Weight)[0][1] / np.var(Height)
+def loss_function(m, b, points):
+    total_error = 0
 
-# intercept
-c = np.mean(Weight) - m * np.mean(Height)
+    for i in range(len(points)):
+        x = points.iloc[i].Height
+        y = points.iloc[i].Weight
+
+        total_error += (y - (m*x + b))**2
+
+    return total_error / float(len(points))
+
+
+def gradient_descent(m_now, b_now, points, LR):
+
+    m_gradient = 0
+    b_gradient = 0
+    n = len(points)
+
+    for i in range(n):
+
+        x = points.iloc[i].Height
+        y = points.iloc[i].Weight
+
+        error = y - (m_now*x + b_now)
+
+        m_gradient += -(2/n) * x * error
+        b_gradient += -(2/n) * error
+
+    m = m_now - m_gradient * LR
+    b = b_now - b_gradient * LR
+
+    return m, b
+
+
+L = 0.0001
+m = 0
+b = 0
+epoch = 500
+
+for i in range(epoch):
+
+    if i % 50 == 0:
+        print(f"Iteration Cycle {i} , Loss = {loss_function(m,b,data)}")
+
+    m, b = gradient_descent(m, b, data, L)
+
 
 print("m =", m)
-print("c =", c)
+print("b =", b)
 
-# predicted weight
-predictedWeight = []
 
-for x in Height:
-    predictedWeight.append(m * x + c)
+plt.scatter(data.Height, data.Weight, color="Red")
 
-# scatter plot
-mat.scatter(Height, Weight,color="red")
-
-# regression line
-mat.plot(Height, predictedWeight)
-mat.xlabel("Height")
-mat.ylabel("Weight")
-mat.title("Linear Regression")
-mat.show()
+plt.plot(
+    range(60, 80),
+    [(m*x) + b for x in range(60,80)]
+)
+plt.title("Linear Regression")
+plt.xlabel("Weight")
+plt.ylabel("Height")
+plt.show()
