@@ -52,7 +52,7 @@ L = 0.001
 m = 0
 b = 0
 
-epoch = 500
+epoch = 50000
 
 for i in range(epoch):
 
